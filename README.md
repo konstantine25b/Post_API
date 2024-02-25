@@ -35,8 +35,8 @@ project/
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/your_username/your_repository.git
-   cd your_repository
+   git clone github.com/konstantine25b/Post_API
+   cd Post_API
    ```
 
 2. Build and start Docker containers:
