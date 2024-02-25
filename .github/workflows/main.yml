@@ -1,0 +1,33 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Building CI
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Create .env file
+        run: |
+          echo DEBUG=${{ secrets.DEBUG }} >> .env
+          echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
+          echo DATABASE_NAME=${{ secrets.DATABASE_NAME }} >> .env
+          echo DATABASE_USER=${{ secrets.DATABASE_USER }} >> .env
+          echo DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} >> .env
+          echo DATABASE_HOST=${{ secrets.DATABASE_HOST }} >> .env
+          echo DATABASE_PORT=${{ secrets.DATABASE_PORT }} >> .env
+
+
+      - name: Build Services
+        run: docker-compose up --build -d
+
+      - name: Run Tests
+        run: docker-compose exec web python manage.py test
