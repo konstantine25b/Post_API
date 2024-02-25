@@ -29,5 +29,6 @@ jobs:
       - name: Build Services
         run: docker-compose up --build -d
 
+
       - name: Run Tests
         run: docker-compose exec web python manage.py test
